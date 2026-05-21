@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase'
 import { useStore } from '@/lib/store'
-import { Zap, Clock, Tag, Calendar, RefreshCw, Star, LayoutKanban, Plus } from 'lucide-react'
+import { Zap, Clock, Tag, Calendar, RefreshCw, Star, Columns, Plus } from 'lucide-react'
 import type { Automacao } from '@/types'
 
 const ICONES: Record<string, React.ReactNode> = {
@@ -12,7 +12,7 @@ const ICONES: Record<string, React.ReactNode> = {
   tag_aplicada:         <Tag size={15} />,
   consulta_agendada:    <Calendar size={15} />,
   consulta_concluida:   <Star size={15} />,
-  card_movido:          <LayoutKanban size={15} />,
+  card_movido:          <Columns size={15} />,
   agendamento_proximo:  <RefreshCw size={15} />,
 }
 
@@ -77,7 +77,6 @@ export default function AutomacoesPage() {
                   auto.ativa ? 'border-black/[0.06]' : 'border-black/[0.04] opacity-60'
                 }`}
               >
-                {/* Ícone */}
                 <div
                   className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
                   style={{ background: ICONE_CORES[auto.gatilho_tipo] || '#F1EFE8', color: '#444' }}
@@ -85,7 +84,6 @@ export default function AutomacoesPage() {
                   {ICONES[auto.gatilho_tipo] || <Zap size={15} />}
                 </div>
 
-                {/* Info */}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium">{auto.nome}</p>
                   {auto.descricao && (
@@ -105,7 +103,6 @@ export default function AutomacoesPage() {
                   </div>
                 </div>
 
-                {/* Toggle */}
                 <button
                   onClick={() => toggleAtiva(auto.id, !auto.ativa)}
                   className={`relative w-10 h-5 rounded-full transition-colors flex-shrink-0 ${
