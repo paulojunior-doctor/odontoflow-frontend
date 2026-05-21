@@ -6,16 +6,16 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase'
 import { useStore } from '@/lib/store'
 import {
-  MessageSquare, LayoutKanban, Calendar,
+  MessageSquare, Columns, Calendar,
   BarChart2, Zap, Settings, LogOut, Stethoscope
 } from 'lucide-react'
 
 const navItems = [
-  { href: '/dashboard/inbox',     icon: MessageSquare, label: 'Inbox' },
-  { href: '/dashboard/pipeline',  icon: LayoutKanban,  label: 'Pipeline' },
-  { href: '/dashboard/agenda',    icon: Calendar,      label: 'Agenda' },
-  { href: '/dashboard/dashboard', icon: BarChart2,     label: 'Dashboard' },
-  { href: '/dashboard/automacoes',icon: Zap,           label: 'Automações' },
+  { href: '/dashboard/inbox',      icon: MessageSquare, label: 'Inbox' },
+  { href: '/dashboard/pipeline',   icon: Columns,       label: 'Pipeline' },
+  { href: '/dashboard/agenda',     icon: Calendar,      label: 'Agenda' },
+  { href: '/dashboard/dashboard',  icon: BarChart2,     label: 'Dashboard' },
+  { href: '/dashboard/automacoes', icon: Zap,           label: 'Automações' },
 ]
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               title={label}
               className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all
                 ${active
-                  ? 'bg-[#E1F5EE] text-[#085041] shadow-[inset_0_0_0_1px_#1D9E75]/20'
+                  ? 'bg-[#E1F5EE] text-[#085041] shadow-[inset_0_0_0_1px_rgba(29,158,117,0.2)]'
                   : 'text-gray-400 hover:bg-gray-100 hover:text-gray-700'
                 }`}
             >
@@ -91,7 +91,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Avatar */}
         {usuario && (
           <div className="w-8 h-8 rounded-full bg-[#E1F5EE] flex items-center justify-center text-[10px] font-medium text-[#085041] mt-1">
-            {usuario.nome.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase()}
+            {usuario.nome.split(' ').map((n: string) => n[0]).join('').slice(0,2).toUpperCase()}
           </div>
         )}
       </aside>
