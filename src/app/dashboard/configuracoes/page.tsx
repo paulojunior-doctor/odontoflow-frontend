@@ -166,7 +166,9 @@ function Toggle({ label, value, onChange }: { label: string; value: boolean; onC
       <span className="text-sm text-gray-600">{label}</span>
       <button
         onClick={() => onChange(!value)}
-        className={`w-10
+        className={`w-10 h-5 rounded-full transition-all relative ${value ? 'bg-[#1D9E75]' : 'bg-gray-200'}`}
+      >
+        <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all ${value ? 'left-5' : 'left-0.5'}`} />
       </button>
     </div>
   )
