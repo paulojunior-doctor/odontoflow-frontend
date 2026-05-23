@@ -132,19 +132,31 @@ export default function ModalAgendamento({ slot, agendamento, dentistas, onFecha
       criado_por: usuario?.id,
     }
 
-    let error
+    let error = null
     if (isEdicao) {
       ;({ error } = await supabase.from('agendamentos').update(payload).eq('id', agendamento!.id!))
     } else {
-      ;({ error } = await supabase.from('agendamentos').insert(payload))
+      // Chama a API para criar agendamento E mover card no kanban
+      const { data: { session } } = await supabase.auth.getSession()
+      const resp = await fetch('/api/agendamentos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`,
+        },
+        body: JSON.stringify({
+          contatoId: contatoSelecionado.id,
+          inicio: new Date(inicio).toISOString(),
+          fim: addMinutes(new Date(inicio), duracao).toISOString(),
+          procedimento: procedimentoId || null,
+          observacoes: observacoes || null,
+        }),
+      })
+      if (!resp.ok) error = await resp.json()
     }
 
     if (error) {
-      if (error.code === '23P01') {
-        setErro('Este dentista já tem consulta neste horário')
-      } else {
-        setErro('Erro ao salvar. Tente novamente.')
-      }
+      setErro('Erro ao salvar. Tente novamente.')
       setSalvando(false)
       return
     }
