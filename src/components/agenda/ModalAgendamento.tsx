@@ -138,7 +138,7 @@ export default function ModalAgendamento({ slot, agendamento, dentistas, onFecha
     } else {
       // Chama a API para criar agendamento E mover card no kanban
       const { data: { session } } = await supabase.auth.getSession()
-      const resp = await fetch('/api/agendamentos', {
+      const resp = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/agendamentos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
